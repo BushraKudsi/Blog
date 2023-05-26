@@ -32,7 +32,8 @@ class BlogPostController extends Controller
      */
     public function create()
     {
-        return view('pages.create');
+        $allCategories = Category::all()->sortBy('name');
+        return view('pages.create',['allCategories'=>$allCategories]);
     }
 
     /**
@@ -43,7 +44,7 @@ class BlogPostController extends Controller
      */
     public function store(Request $request)
     {
-        $category = Category::where('name', $request->category)->first(); 
+        $category = Category::where('id', $request->categories)->first(); 
 
         if ($category) {
             $newPost = BlogPost::create([
@@ -58,7 +59,7 @@ class BlogPostController extends Controller
                 'category_id' => 1,
             ]);
         }
-        return redirect('blog/post' . $newPost->id);
+        return redirect('post/' . $newPost->id);
     }
     
 
@@ -94,11 +95,12 @@ class BlogPostController extends Controller
      */
     public function edit(BlogPost $blogPost)
     {
-        $category = Category::findOrFail($blogPost->category_id);
-        $categoryName = $category->name;
+        $selectedCategory = Category::findOrFail($blogPost->category_id);
+        $allCategories = Category::all()->sortBy('name');
         return view('pages.edit', [
             'post' => $blogPost,
-            'categoryName' => $categoryName,
+            'selectedCategory' => $selectedCategory,
+            'allCategories' => $allCategories
             ]); 
     }
 
@@ -111,9 +113,8 @@ class BlogPostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, BlogPost $blogPost)
-    {
-        $category = Category::where('name', $request->category)->first(); 
-
+    {   
+        $category = Category::where('id', $request->categories)->first(); 
         if ($category) {
             $blogPost ->update([
                 'title' => $request->title,
@@ -127,7 +128,7 @@ class BlogPostController extends Controller
                 'category_id' => 1,
             ]);
         }
-        return redirect('blog/post' . $blogPost->id);
+        return redirect('post/' . $blogPost->id);
     }
 
 

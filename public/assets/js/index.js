@@ -1,9 +1,10 @@
 $(document).ready(function() {
     $('.close-icon').on("click", function() {
       var clickedIcon = $(this)
-      var postId = $(this).prev('.blog-title').attr('href').split('/post').pop();
+      var postId = $(this).prev('.blog-title').attr('href').split('/post/').pop();
+      console.log(postId)
       $.ajax({
-        url: '/blog/post' + postId + '/delete',
+        url: '/post' + '/delete/' +postId ,
         method: 'DELETE',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -23,24 +24,16 @@ $(document).ready(function() {
 
     $('.edit-btn').on('click',function(){
         var url = $(location).attr('href');
-        var mainPostID = url.split('/').pop();
-        var subPostID = url.split('/')[4];
-        console.log(mainPostID)
-        console.log(subPostID)
-        // var subPostId = $(this).prev('.blog-title').attr('href').split('/').pop();
-        if (url.includes('subPost')) {
-            $(this).attr("href", '/blog/' + subPostID + '/' + mainPostID+'/editSubPost')
-        } else {
-            $(this).attr("href", '/blog/' + mainPostID + '/edit')
-        }
-
+        var id = url.split('/').slice(-1);
+        window.location = '/post/edit/' +id;
     })
 
 
     $('.back-btn').on("click", function() {
-        var url = $(location).attr('href');
-        var newUrl = url.substring(0, url.lastIndexOf('/'));
-        window.location.href = newUrl;
+        // var url = $(location).attr('href');
+        // var lastPart = url.split('/').slice(-2);
+        // var newUrl = url.replace(lastPart, "/blog");  
+        window.location.href = '/blog/';
         return false;
     });
 

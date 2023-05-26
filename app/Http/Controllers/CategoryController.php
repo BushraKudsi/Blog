@@ -9,58 +9,22 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-        /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    // public function storeSubPost(Request $request)
-    // {
-    //     $newPost = SubPost::create([
-    //         'blog_post_id' => $request->id,
-    //         'title' => $request->title,
-    //         'body' => $request->body,
-    //         'user_id' => 1
-    //     ]);
 
-    //     return redirect('blog/' . $newPost->id);
-    // }
+    public function create()
+    {
+        return view('pages.createCat');
+    }
 
+    public function store(Request $request)
+    {
 
-    // public function showSubPost($blogPost, $subPost)
-    // {
-    //     $subBlogPost = SubPost::findOrFail($subPost);
-        
-    //     return view('pages.show', [
-    //         'post' => $subBlogPost,
-    //         'subPosts' => null,
-    //     ]);
-    // }
+        $newCat = Category::create([
+            'name' => $request->title,
+            'description' => $request->body,
+        ]);
 
-    // public function updateSubPost(Request $request, SubPost $subPost)
-    // {
-    //     $subPost ->update([
-    //         'title' => $request->title,
-    //         'body' => $request->body,
-    //     ]);
-
-    //     return redirect('blog/post' . $subPost->id);
-    // }
-
-    // public function deleteSubPost($blogPost, $subPost)
-    // {
-    //     $subBlogPost = SubPost::findOrFail($subPost);
-    //     $subBlogPost->delete();
-    // }
-
-    // public function editSubPost(BlogPost $blogPost, SubPost $subPost)
-    // {
-    //     return view('pages.edit', [
-    //         'post' => $subPost,
-    //         ]); 
-    // }
-
+        return redirect('cat/' . $newCat->id);
+    }
 
     public function filter(Category $category)
     {

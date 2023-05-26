@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BlogPostController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,21 +22,26 @@ Route::get('/', function () {
 });
 
 
-Route::get('/blog',[\App\Http\Controllers\BlogPostController::class, 'index']);
-
-Route::get('/blog/post{blogPost}', [\App\Http\Controllers\BlogPostController::class, 'show']);
-
-Route::get('/blog/create', [\App\Http\Controllers\BlogPostController::class, 'create']); 
-Route::post('/blog/create', [\App\Http\Controllers\BlogPostController::class, 'store']);
-
-Route::get('/blog/post{blogPost}/edit', [\App\Http\Controllers\BlogPostController::class, 'edit']); 
-Route::put('/blog/post{blogPost}/edit', [\App\Http\Controllers\BlogPostController::class, 'update']);
-Route::delete('/blog/post{blogPost}', [\App\Http\Controllers\BlogPostController::class, 'destroy']);
-Route::delete('/blog/post{blogPost}/delete', [\App\Http\Controllers\BlogPostController::class, 'deletePostFromHome']);
-Route::get('/blog/cat{category}', [\App\Http\Controllers\CategoryController::class, 'filter']);
-Route::get('/blog/search/{title}', [\App\Http\Controllers\BlogPostController::class, 'search']);
+Route::get('/cat/create',[\App\Http\Controllers\CategoryController::class, 'create']);
+Route::post('/cat/create',[\App\Http\Controllers\CategoryController::class, 'store']);
 
 
+Route::controller(CategoryController::class)->prefix('cat')->group(function () {
+    Route::get('{category}', 'filter');
+});
+Route::controller(BlogPostController::class)->prefix('blog')->group(function () {
+    Route::get('/', 'index');
+    Route::get('create', 'create');
+    Route::post('create', 'store');
+    Route::get('search/{title}', 'search');
 
+});
+Route::controller(BlogPostController::class)->prefix('post')->group(function () {
+    Route::get('{blogPost}', 'show');
+    Route::get('edit/{blogPost}', 'edit');
+    Route::put('edit/{blogPost}', 'update');
+    Route::delete('{blogPost}', 'destroy');
+    Route::delete('delete/{blogPost}', 'deletePostFromHome');
+});
 
 

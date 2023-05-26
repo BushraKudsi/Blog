@@ -14,7 +14,7 @@
                 <div class="col-12 categories-tab">
                     @forelse ($categories as $category)         
                         <div class="category">
-                                <a class="category-title" href="./blog/cat{{ $category->id }}">{{ ucfirst($category->name) }}</a>
+                                <a class="category-title" href="/cat/{{ $category->id }}">{{ ucfirst($category->name) }}</a>
                         </div>
                         @empty  
                         <p class="text-warning">No blog Posts available</p>
@@ -23,7 +23,10 @@
 
                 <div class="col-12 search-create-tab">
                     <div class="col-6 add-post">
-                        <a href="/blog/create" class="btn btn-primary btn-sm">Create New Post</a>
+                        <a href="./create" class="btn btn-primary btn-sm">Create New Post</a>
+                    </div>
+                    <div class="col-6 add-post">
+                        <a href="/cat/create" class="btn btn-primary btn-sm">Create New Category</a>
                     </div>
                     <div class="col-6 search-bar">
                         <input class="search-text" type="text" placeholder="Search">
@@ -36,7 +39,7 @@
                 <ul class="post-ul">
                     @forelse ($posts as $post)         
                     <li class="post-link">
-                        <a class="blog-title" href="./blog/post{{ $post->id }}">{{ ucfirst($post->title) }}</a>
+                        <a class="blog-title" href="/post/{{ $post->id }}">{{ ucfirst($post->title) }}</a>
                         <span class="close-icon">x</span></a>
                     </li>
                     {{-- format each first letter as capital --}}

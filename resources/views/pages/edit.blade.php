@@ -18,8 +18,15 @@
                     <div class="row">
                         <div class="control-group col-12">
                             <label for="category">Post Category</label>
-                            <input type="text" id="category" class="form-control" name="category"
-                                   placeholder="Enter Post Category" value="{{ ucfirst($categoryName) }}" required>
+                            {{-- <input type="text" id="category" class="form-control" name="category"
+                                   placeholder="Enter Post Category" value="{{ ucfirst($categoryName) }}" required> --}}
+                                   <select id="categories" name="categories">
+                                    @foreach ($allCategories as $category)
+                                        <option value="{{ $category->id }}" {{ $selectedCategory->id == $category->id ? 'selected' : '' }} >{{ $category->name }}</option>
+
+                                    @endforeach
+
+                                   </select>
                         </div>
                         <div class="control-group col-12">
                             <label for="title">Post Title</label>

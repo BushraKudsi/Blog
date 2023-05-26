@@ -10,6 +10,15 @@
                 <h2 class="display-category2">    
                         {{ ucfirst($categoryName) }}
                 </h2>
+                {{-- <div class="col-12 edit-post">
+                    <a href="javascript:void(0)" class="edit-btn btn btn-primary btn-sm">Edit Category</a>
+                </div>
+                <br>
+                <form id="delete-frm" class="col-12 delete-form" action="" method="POST">
+                    @method('DELETE')   
+                    @csrf
+                    <button class="delete-btn btn btn-danger">Delete Category</button>
+                </form> --}}
                 <div class="col-12 search-create-tab">
                     <div class="col-6 add-post">
                         <a href="/blog/create" class="btn btn-primary btn-sm">Create New Post</a>
@@ -25,7 +34,7 @@
                 <ul>
                     @forelse ($posts as $post)         
                     <li class="post-link">
-                        <a class="blog-title" href="./post{{ $post->id }}">{{ ucfirst($post->title) }}</a>
+                        <a class="blog-title" href="/post/{{ $post->id }}">{{ ucfirst($post->title) }}</a>
                         <span class="close-icon">x</span></a>
                     </li>
                     {{-- format each first letter as capital --}}
